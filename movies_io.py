@@ -77,7 +77,6 @@ def get_imdb_info(imdb_id):
     page = requests.get(url, headers=headers)
     soup = BeautifulSoup(page.text, 'html.parser')
 
-    time.sleep(1)
     imdb_info = []
 
     meta_score = soup.find('div', {'class': ['metacriticScore score_favorable titleReviewBarSubItem', 'metacriticScore score_mixed titleReviewBarSubItem', 'metacriticScore score_unfavorable titleReviewBarSubItem']})
@@ -113,8 +112,8 @@ def get_imdb_info(imdb_id):
                 director.append(x['name'])
     except TypeError:
         director = page_json['director']['name']
-
-    print()
+    except KeyError:
+        director = 'No director'
 
     try:
         creator = []
@@ -123,8 +122,8 @@ def get_imdb_info(imdb_id):
                 creator.append(x['name'])
     except TypeError:
         creator = page_json['creator']['name']
-
-    print()
+    except KeyError:
+        creator = 'No creator'
 
     try:
         actor = []
@@ -133,6 +132,9 @@ def get_imdb_info(imdb_id):
                 actor.append(x['name'])
     except TypeError:
         actor = page_json['actor']['name']
+    except KeyError:
+        actor = 'No actor'
+
 
     imdb_info.append(director)
     imdb_info.append(creator)
