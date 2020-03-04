@@ -100,7 +100,11 @@ def get_imdb_info(imdb_id):
 
     page_json = soup.find('script', {'type': 'application/ld+json'})
     page_json = json.loads(page_json.get_text())
-    imdb_info.append(page_json['contentRating'])
+
+    try:
+        imdb_info.append(page_json['contentRating'])
+    except KeyError:
+        imdb_info.append('No content rating')
 
     try:
         director = []
