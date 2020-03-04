@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:73.0) Gecko/20100101 Firefox/73.0'
@@ -7,7 +8,6 @@ headers = {
 
 
 def get_imdb_ID(tmdb_id):
-
     movie_url = 'https://api.themoviedb.org/3/movie/' + str(tmdb_id) +'?api_key=d34a7ae8e00fac4590a4aee2a6e5d4a5&language=en-US'
     print('Scraping: ' + movie_url)
     movie_resp = requests.get(movie_url, headers=headers)
@@ -19,6 +19,21 @@ def get_imdb_ID(tmdb_id):
         print('No IMDb ID detected.')
 
     return imdb_id
+
+
+def get_movie_details(tmdb_id):
+    production_companies = []
+    genres = []
+    url = 'https://api.themoviedb.org/3/movie/' + str(tmdb_id) +'?api_key=d34a7ae8e00fac4590a4aee2a6e5d4a5&language=en-US'
+    movie_resp = requests.get(url, headers=headers)
+    movie_json = movie_resp.json()
+    for p in movie_json['production_companies']:
+        production_companies.append(p['name'])
+    for z in movie_json['genres']:
+        genres.append(z['name'])
+
+    return movie_json['title'], movie_json['original_language'], production_companies, genres, movie_json['budget']
+
 
 def get_box_office(imdb_id):
     if imdb_id == 0:
@@ -51,9 +66,10 @@ def get_imdb_info(imdb_id):
     page = requests.get(url, headers=headers)
     soup = BeautifulSoup(page.text, 'html.parser')
 
+    time.sleep(1)
     imdb_info = []
 
-    meta_score = soup.find('div', {'class': 'metacriticScore score_mixed titleReviewBarSubItem'})
+    meta_score = soup.find('div', {'class': ['metacriticScore score_favorable titleReviewBarSubItem', 'metacriticScore score_mixed titleReviewBarSubItem', 'metacriticScore score_unfavorable titleReviewBarSubItem']})
     if meta_score == None:
         imdb_info.append('No Metacritic score')
     else:
