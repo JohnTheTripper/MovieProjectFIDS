@@ -92,8 +92,11 @@ def get_imdb_info(imdb_id):
     imdb_votes = soup.find('span', {'itemprop': 'ratingCount'})
     imdb_info.append(imdb_votes.get_text())
 
-    popularity = soup.findAll('span', {'class': 'subText'})
-    imdb_info.append(popularity[2].get_text().strip().split(' ', 1)[0].strip())
+    try:
+        popularity = soup.findAll('span', {'class': 'subText'})
+        imdb_info.append(popularity[2].get_text().strip().split(' ', 1)[0].strip())
+    except IndexError:
+        imdb_info.append('No popularity')
 
     page_json = soup.find('script', {'type': 'application/ld+json'})
     page_json = json.loads(page_json.get_text())
