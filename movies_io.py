@@ -32,7 +32,7 @@ def get_movie_details(tmdb_id):
     for z in movie_json['genres']:
         genres.append(z['name'])
 
-    return movie_json['title'], movie_json['original_language'], production_companies, genres, movie_json['budget']
+    return movie_json['title'], movie_json['release_date'], movie_json['runtime'], movie_json['budget'], movie_json['original_language'], production_companies, genres
 
 
 def get_box_office(imdb_id):
