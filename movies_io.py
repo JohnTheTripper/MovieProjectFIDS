@@ -1,10 +1,21 @@
 import requests
 from bs4 import BeautifulSoup
 import time
+import json
+import pandas as pd
+from pandas.io.json import json_normalize
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:73.0) Gecko/20100101 Firefox/73.0'
 }
+
+
+def get_tmdb_ids(list_url):
+    df_json = pd.read_json(list_url)
+    df_norm = json_normalize(df_json['results'])
+    resultant = pd.concat([df_json, df_norm], axis=1).drop('results', axis=1)
+
+    return (list(resultant['id']))
 
 
 def get_imdb_ID(tmdb_id):
@@ -80,5 +91,44 @@ def get_imdb_info(imdb_id):
 
     imdb_votes = soup.find('span', {'itemprop': 'ratingCount'})
     imdb_info.append(imdb_votes.get_text())
+
+    popularity = soup.findAll('span', {'class': 'subText'})
+    imdb_info.append(popularity[2].get_text().strip().split(' ', 1)[0].strip())
+
+    page_json = soup.find('script', {'type': 'application/ld+json'})
+    page_json = json.loads(page_json.get_text())
+    imdb_info.append(page_json['contentRating'])
+
+    try:
+        director = []
+        for x in page_json['director']:
+            if x['@type'] == 'Person':
+                director.append(x['name'])
+    except TypeError:
+        director = page_json['director']['name']
+
+    print()
+
+    try:
+        creator = []
+        for x in page_json['creator']:
+            if x['@type'] == 'Person':
+                creator.append(x['name'])
+    except TypeError:
+        creator = page_json['creator']['name']
+
+    print()
+
+    try:
+        actor = []
+        for x in page_json['actor']:
+            if x['@type'] == 'Person':
+                actor.append(x['name'])
+    except TypeError:
+        actor = page_json['actor']['name']
+
+    imdb_info.append(director)
+    imdb_info.append(creator)
+    imdb_info.append(actor)
 
     return imdb_info
