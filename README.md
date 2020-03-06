@@ -16,4 +16,8 @@ Our presentation can be found at the following link: https://docs.google.com/pre
 ## About the Dataset
 Our dataset is comprised of details on 6,759 movies. Basic movie information was populated through API calls generously provided by The Movie Database. Financial box office numbers were scraped from BoxOfficeMojo, and critical and popular reception was scraped from IMDb.
 
+## Results
+We created a presentation with insights and recommended action based on our analysis. We created 
+
 ![emerging_directors](https://github.com/JohnTheTripper/MovieProjectFIDS/blob/master/emerging_directors.png)
+![genres](https://github.com/JohnTheTripper/MovieProjectFIDS/blob/master/genres.png)
