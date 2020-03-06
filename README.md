@@ -11,7 +11,7 @@ Our presentation can be found at the following link: https://docs.google.com/pre
 ## In this Respository
 * movies_io.py - Python file containing all web-scraping and API call functions
 * apicalls_scraping.ipynb - Jupyter notebook demonstrating webscraping and API calls
-* visualization.ipynb - Jupyter notebook containing visualizations
+* visualizations_repro.ipynb - Jupyter notebook containing visualizations
 
 ## About the Dataset
 Our dataset is comprised of details on 6,759 movies. Basic movie information was populated through API calls generously provided by The Movie Database. Financial box office numbers were scraped from BoxOfficeMojo, and critical and popular reception was scraped from IMDb.
