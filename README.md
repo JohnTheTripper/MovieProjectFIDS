@@ -21,4 +21,4 @@ We created a presentation with insights and recommended action based on our anal
 
 ![emerging_directors](https://github.com/JohnTheTripper/MovieProjectFIDS/blob/master/emerging_directors.png)
 ![genres](https://github.com/JohnTheTripper/MovieProjectFIDS/blob/master/genres.png)
-![languages](https://github.com/JohnTheTripper/MovieProjectFIDS/blob/master/genres.png)
+![languages](https://github.com/JohnTheTripper/MovieProjectFIDS/blob/master/languages.png)
